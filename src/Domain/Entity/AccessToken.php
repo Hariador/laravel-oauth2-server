@@ -27,7 +27,7 @@
 		/** @var string[] */
 		protected $scopeNames;
 
-		/** @var string */
+		/** @var null|string */
 		protected $refreshTokenId;
 
 		//
@@ -93,7 +93,7 @@
 		}
 
 		/**
-		 * @return string
+		 * @return null|string
 		 */
 		public function getRefreshTokenId() {
 			return $this->refreshTokenId;

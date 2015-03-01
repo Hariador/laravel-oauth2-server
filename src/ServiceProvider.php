@@ -1,9 +1,11 @@
 <?php namespace Atrauzzi\LaravelOauth2Server {
 
+	use Illuminate\Contracts\Foundation\Application;
 	use Illuminate\Support\ServiceProvider as Base;
 	//
 	use Illuminate\Routing\Router;
-	use League\Oauth2\Server\Config;
+	use League\Oauth2\Server\Config as Oauth2Config;
+	use Atrauzzi\LaravelOauth2Server\Config as LaravelOauth2Config;
 
 
 	class ServiceProvider extends Base {
@@ -15,13 +17,35 @@
 		 */
 		public function register() {
 
-			$this->app->singleton('League\Oauth2\Server\Config', function () {
+			$this->app->singleton('League\Oauth2\Server\Config', function (Application $app) {
 
-				$config = new Config();
+				$config = new Oauth2Config();
 
-				return $config
-					
+				$config
+					->setTokenStrategy($this->makeServerObject('TokenStrategy', config('token_strategy', 'bearer')))
+					->setAuthorizationCodeTtl(config('oauth2.authorization_code_ttl', '300'))
+					->setAccessTokenTtl(config('oauth2.access_token_ttl', 3600))
+					->setRefreshTokenTtl(config('oauth2.refresh_token_ttl', 604800))
+					->requireScopeParam(config('oauth2.require_scopes', false))
+					->requireStateParam(config('oauth2.require_state', false))
+					->rotateRefreshTokens(config('oauth2.rotate_refresh_tokens', false))
+					->setDefaultScopes(config('oauth2.default_scopes'))
 				;
+
+				foreach(config('oauth2.grant_types', ['authorization_code']) as $grantType)
+					$config->addGrantType($this->makeServerObject('GrantType', $grantType));
+
+				return $config;
+
+			});
+
+			$this->app->singleton('Atrauzzi\LaravelOauth2Server\Config', function (Application $app) {
+
+				$config = new LaravelOauth2Config();
+
+
+
+				return $config;
 
 			});
 
@@ -65,6 +89,24 @@
 				$router->post('authorize', '');
 
 			});
+
+		}
+
+		/**
+		 * Convenience method to build core server objects.
+		 *
+		 * @param string|string[] $parts
+		 * @return mixed
+		 */
+		protected function makeServerObject($parts) {
+
+			if(!is_array($parts))
+				$parts = func_get_args();
+
+			$parts = array_map('studly_case', $parts);
+			array_unshift($parts, 'League', 'Oauth2', 'Server');
+
+			return $this->app->make(implode('\\', $parts));
 
 		}
 
