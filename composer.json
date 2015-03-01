@@ -6,20 +6,13 @@
 		{
 			"name": "Alexander Trauzzi",
 			"email": "atrauzzi@gmail.com",
-			"homepage": "http://profiles.google.com/atrauzzi",
-			"role": "Creator"
-		}
-	],
-	"repositories": [
-		{
-			"type": "git",
-			"url": "git@github.com:atrauzzi/oauth2-server.git"
+			"homepage": "http://profiles.google.com/atrauzzi"
 		}
 	],
 	"require": {
 		"php": ">=5.4.0",
 		"illuminate/support": "5.0.*",
-		"league/oauth2-server": "dev-cleanup"
+		"atrauzzi/oauth2-server": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
