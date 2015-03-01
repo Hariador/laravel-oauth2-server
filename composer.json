@@ -2,10 +2,6 @@
 	"name": "atrauzzi/laravel-oauth2-server",
 	"description": "Stay tuned!",
 	"license": "MIT",
-	"require": {
-		"php": ">=5.4.0",
-		"illuminate/support": "5.0.*"
-	},
 	"authors": [
 		{
 			"name": "Alexander Trauzzi",
@@ -14,6 +10,17 @@
 			"role": "Creator"
 		}
 	],
+	"repositories": [
+		{
+			"type": "git",
+			"url": "git@github.com:atrauzzi/oauth2-server.git"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"illuminate/support": "5.0.*",
+		"league/oauth2-server": "dev-cleanup"
+	},
 	"autoload": {
 		"psr-4": {
 			"Atrauzzi\\LaravelOauth2Server\\": "src/"
