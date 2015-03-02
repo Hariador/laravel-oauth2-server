@@ -13,7 +13,7 @@ class CreateClientTable extends Migration {
 	 */
 	public function up() {
 
-		Schema::create('oauth_client', function(Blueprint $table) {
+		Schema::create('oauth2_client', function(Blueprint $table) {
 
 			$table->increments('id');
 
@@ -35,7 +35,7 @@ class CreateClientTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('oauth_client');
+		Schema::drop('oauth2_client');
 	}
 
 }

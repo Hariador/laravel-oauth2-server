@@ -7,7 +7,7 @@
 	class Client extends Model implements ClientContract {
 
 		/** @var string */
-		protected $table = 'oauth_client';
+		protected $table = 'oauth2_client';
 
 		/**
 		 * @param string $name

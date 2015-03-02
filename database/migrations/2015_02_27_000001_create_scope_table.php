@@ -13,7 +13,7 @@ class CreateScopeTable extends Migration {
 	 */
 	public function up() {
 
-		Schema::create('oauth_scope', function(Blueprint $table) {
+		Schema::create('oauth2_scope', function(Blueprint $table) {
 
 			$table->string('name')->unique()->primary();
 
@@ -31,7 +31,7 @@ class CreateScopeTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('oauth_scope');
+		Schema::drop('oauth2_scope');
 	}
 
 }

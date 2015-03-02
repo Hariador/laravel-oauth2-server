@@ -7,7 +7,7 @@
 	class Scope extends Model implements ScopeContract {
 
 		/** @var string */
-		protected $table = 'oauth_scope';
+		protected $table = 'oauth2_scope';
 
 		/** @var string */
 		protected $primaryKey = 'name';
