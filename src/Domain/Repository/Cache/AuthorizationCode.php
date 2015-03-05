@@ -1,8 +1,8 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache {
 
-	use League\Oauth2\Server\Domain\Repository\AuthorizationCode as AuthorizationCodeRepository;
+	use Atrauzzi\Oauth2Server\Domain\Repository\AuthorizationCode as AuthorizationCodeRepository;
 	//
-	use League\Oauth2\Server\Domain\Entity\AuthorizationCode as AuthorizationCodeContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode as AuthorizationCodeContract;
 	use Atrauzzi\LaravelOauth2Server\Domain\Entity\AuthorizationCode as AuthorizationCodeEntity;
 	use DateTime;
 
@@ -19,7 +19,7 @@
 		 * @param int $clientId
 		 * @param string[] $scopeNames
 		 * @param string $redirectUri
-		 * @return \League\Oauth2\Server\Domain\Entity\AuthorizationCode
+		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode
 		 */
 		public function create($id, $expireTime, $oauthableId, $oauthableType, $clientId, array $scopeNames, $redirectUri) {
 			return new AuthorizationCodeEntity($id, $expireTime, $oauthableId, $oauthableType, $clientId, $scopeNames, $redirectUri);
@@ -27,14 +27,14 @@
 
 		/**
 		 * @param string $id
-		 * @return \League\Oauth2\Server\Domain\Entity\AuthorizationCode
+		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode
 		 */
 		public function find($id) {
 			return $this->cache->get($this->getKey('authorization_code', $id));
 		}
 
 		/**
-		 * @param \League\Oauth2\Server\Domain\Entity\AuthorizationCode $authorizationCode
+		 * @param \Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode $authorizationCode
 		 */
 		public function persist(AuthorizationCodeContract $authorizationCode) {
 			$this->cache->put(
@@ -45,7 +45,7 @@
 		}
 
 		/**
-		 * @param \League\Oauth2\Server\Domain\Entity\AuthorizationCode|string $id
+		 * @param \Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode|string $id
 		 */
 		public function delete($id) {
 

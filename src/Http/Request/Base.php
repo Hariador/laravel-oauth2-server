@@ -5,13 +5,11 @@
 
 	class Base extends FormRequest {
 
+		protected $rootNamespace = 'Atrauzzi\LaravelOauth2Server\Http\Controller';
+
 		public function rules() {
 			return [
 			];
-		}
-
-		public function authorize() {
-			return true;
 		}
 
 	}

@@ -1,7 +1,7 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Entity {
 
-	use League\Oauth2\Server\Domain\Entity\AuthorizationCode as AuthorizationCodeContract;
-	use League\Oauth2\Server\Domain\Entity\Impl\AuthorizationCode as AuthorizationCodeImpl;
+	use Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode as AuthorizationCodeContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\Impl\AuthorizationCode as AuthorizationCodeImpl;
 
 
 	class AuthorizationCode implements AuthorizationCodeContract {

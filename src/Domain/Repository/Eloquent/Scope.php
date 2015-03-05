@@ -1,6 +1,6 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Repository\Eloquent {
 
-	use League\Oauth2\Server\Domain\Repository\Scope as ScopeRepository;
+	use Atrauzzi\Oauth2Server\Domain\Repository\Scope as ScopeRepository;
 	//
 	use Atrauzzi\LaravelOauth2Server\Domain\Entity\Scope as EloquentScope;
 
@@ -13,7 +13,7 @@
 		 * @param string $id The scope
 		 * @param string $grantType The grant type used in the request (default = "null")
 		 * @param string $clientId The client sending the request (default = "null")
-		 * @return \League\Oauth2\Server\Domain\Entity\Scope
+		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\Scope
 		 */
 		public function find($id, $clientId = null, $grantType = null) {
 
@@ -33,12 +33,12 @@
 		/**
 		 * Finds all scopes with the supplied identifiers, keyed by id.  Returns all if null.
 		 *
-		 * @param string[] $names
+		 * @param null|string[] $names
 		 * @param null|string $clientId
 		 * @param null|string $grantTypeIdentifier
-		 * @return \League\Oauth2\Server\Domain\Entity\Scope[]
+		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\Scope[]
 		 */
-		public function findByNames(array $names, $clientId = null, $grantTypeIdentifier = null) {
+		public function findByNames(array $names = null, $clientId = null, $grantTypeIdentifier = null) {
 
 			/** @var \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query */
 			$query = EloquentScope::query();
@@ -50,7 +50,7 @@
 
 			// ToDo: Support matching by grant.
 
-			return $query->get()->keyBy('name');
+			return $query->get()->keyBy('name')->toArray();
 
 		}
 

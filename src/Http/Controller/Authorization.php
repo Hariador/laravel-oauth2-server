@@ -1,9 +1,10 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Http\Controller {
 
+	use Illuminate\Http\Request;
 	use Illuminate\Routing\Controller;
 	//
-	use League\Oauth2\Server\AuthorizationService;
-	use League\Oauth2\Server\GrantType\AuthorizationCode as AuthorizationCodeGrant;
+	use Atrauzzi\Oauth2Server\AuthorizationService;
+	use Atrauzzi\Oauth2Server\GrantType\AuthorizationCode as AuthorizationCodeGrant;
 	use Atrauzzi\LaravelOauth2Server\Http\Request\CreateAuthorization;
 	use Atrauzzi\LaravelOauth2Server\Http\Request\StoreAuthorization;
 	//
@@ -12,11 +13,11 @@
 
 	class Authorization extends Controller {
 
-		/** @var \League\Oauth2\Server\AuthorizationService */
+		/** @var \Atrauzzi\Oauth2Server\AuthorizationService */
 		protected $authorizationService;
 
 		/**
-		 * @param \League\Oauth2\Server\AuthorizationService $authorizationService
+		 * @param \Atrauzzi\Oauth2Server\AuthorizationService $authorizationService
 		 */
 		public function __construct(AuthorizationService $authorizationService) {
 			$this->authorizationService = $authorizationService;
@@ -27,22 +28,25 @@
 		 */
 		public function create(CreateAuthorization $request) {
 
-			// Require authenticated.
+			// Get scopes or default scopes.
 
-			// Ensure authenticated is an oauthable.
+		}
 
-			// If authenticated, show oauth approval form.
-
+		/**
+		 * @return \Illuminate\View\View
+		 */
+		public function invalid() {
+			return view('oauth2::authorization_invalid');
 		}
 
 		public function store(StoreAuthorization $request) {
 
-			$authorizationData = $this->authorizationService->doFlow(
-				$request,
-				AuthorizationCodeGrant::FLOW_AUTHORIZE
-			);
-
-			return new JsonResponse($authorizationData);
+//			$authorizationData = $this->authorizationService->doFlow(
+//				$request,
+//				AuthorizationCodeGrant::FLOW_AUTHORIZE
+//			);
+//
+//			return new JsonResponse($authorizationData);
 
 		}
 

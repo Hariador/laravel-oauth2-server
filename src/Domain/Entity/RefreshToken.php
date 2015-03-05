@@ -1,7 +1,7 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Entity {
 
-	use League\Oauth2\Server\Domain\Entity\RefreshToken as RefreshTokenContract;
-	use League\Oauth2\Server\Domain\Entity\Impl\RefreshToken as RefreshTokenImpl;
+	use Atrauzzi\Oauth2Server\Domain\Entity\RefreshToken as RefreshTokenContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\Impl\RefreshToken as RefreshTokenImpl;
 
 
 	class RefreshToken implements RefreshTokenContract {

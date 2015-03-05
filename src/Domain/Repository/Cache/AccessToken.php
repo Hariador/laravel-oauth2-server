@@ -1,8 +1,8 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache {
 
-	use League\Oauth2\Server\Domain\Repository\AccessToken as AccessTokenRepository;
+	use Atrauzzi\Oauth2Server\Domain\Repository\AccessToken as AccessTokenRepository;
 	//
-	use League\Oauth2\Server\Domain\Entity\AccessToken as AccessTokenContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\AccessToken as AccessTokenContract;
 	use Atrauzzi\LaravelOauth2Server\Domain\Entity\AccessToken as AccessTokenEntity;
 	use DateTime;
 
@@ -28,7 +28,7 @@
 		 * Get an instance of Entity\AccessTokenEntity
 		 *
 		 * @param string $id
-		 * @return \League\Oauth2\Server\Domain\Entity\AccessToken|null
+		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\AccessToken|null
 		 */
 		public function find($id) {
 			return $this->cache->get($this->getKey('access_token', $id));
@@ -36,7 +36,7 @@
 
 		/**
 		 * Creates a new access token
-		 * @param \League\Oauth2\Server\Domain\Entity\AccessToken $accessToken
+		 * @param \Atrauzzi\Oauth2Server\Domain\Entity\AccessToken $accessToken
 		 */
 		public function persist(AccessTokenContract $accessToken) {
 			$this->cache->put(

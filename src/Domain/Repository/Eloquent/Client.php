@@ -1,6 +1,6 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Repository\Eloquent {
 
-	use League\Oauth2\Server\Domain\Repository\Client as ClientRepository;
+	use Atrauzzi\Oauth2Server\Domain\Repository\Client as ClientRepository;
 	//
 	use Atrauzzi\LaravelOauth2Server\Domain\Entity\Client as EloquentClient;
 
@@ -14,7 +14,7 @@
 		 * @param string $secret The client's secret (default = "null")
 		 * @param string $redirectUri The client's redirect URI (default = "null")
 		 * @param string $grantType The grant type used (default = "null")
-		 * @return \League\Oauth2\Server\Domain\Entity\Client
+		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\Client
 		 */
 		public function find($id, $secret = null, $grantType = null, $redirectUri = null) {
 

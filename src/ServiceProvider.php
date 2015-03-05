@@ -1,10 +1,11 @@
 <?php namespace Atrauzzi\LaravelOauth2Server {
 
+	use Atrauzzi\Oauth2Server\AuthorizationService;
 	use Illuminate\Contracts\Foundation\Application;
 	use Illuminate\Support\ServiceProvider as Base;
 	//
 	use Illuminate\Routing\Router;
-	use League\Oauth2\Server\Config as Oauth2Config;
+	use Atrauzzi\Oauth2Server\Config as Oauth2Config;
 	use Atrauzzi\LaravelOauth2Server\Config as LaravelOauth2Config;
 
 
@@ -17,7 +18,7 @@
 		 */
 		public function register() {
 
-			$this->app->singleton('League\Oauth2\Server\Config', function (Application $app) {
+			$this->app->singleton('Atrauzzi\Oauth2Server\Config', function (Application $app) {
 
 				$config = new Oauth2Config();
 
@@ -32,29 +33,35 @@
 					->setDefaultScopes(config('oauth2.default_scopes'))
 				;
 
+				return $config;
+
+			});
+
+//			$this->app->singleton('Atrauzzi\LaravelOauth2Server\Config', function (Application $app) {
+//
+//				$config = new LaravelOauth2Config();
+//
+//				return $config;
+//
+//			});
+
+			$this->app->singleton('Atrauzzi\Oauth2Server\AuthorizationService', function (Application $app) {
+
+				$grantTypes = [];
+
 				foreach(config('oauth2.grant_types', ['authorization_code']) as $grantType)
-					$config->addGrantType($this->makeServerObject('GrantType', $grantType));
+					$grantTypes[] = $this->makeServerObject('GrantType', $grantType);
 
-				return $config;
-
-			});
-
-			$this->app->singleton('Atrauzzi\LaravelOauth2Server\Config', function (Application $app) {
-
-				$config = new LaravelOauth2Config();
-
-
-
-				return $config;
+				return new AuthorizationService($app->make('Atrauzzi\Oauth2Server\Config'), $grantTypes);
 
 			});
 
-			$this->app->singleton('League\Oauth2\Server\Domain\Repository\AuthorizationCode', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache\AuthorizationCode');
-			$this->app->singleton('League\Oauth2\Server\Domain\Repository\AccessToken', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache\AccessToken');
-			$this->app->singleton('League\Oauth2\Server\Domain\Repository\RefreshToken', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache\RefreshToken');
+			$this->app->singleton('Atrauzzi\Oauth2Server\Domain\Repository\AuthorizationCode', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache\AuthorizationCode');
+			$this->app->singleton('Atrauzzi\Oauth2Server\Domain\Repository\AccessToken', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache\AccessToken');
+			$this->app->singleton('Atrauzzi\Oauth2Server\Domain\Repository\RefreshToken', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Cache\RefreshToken');
 
-			$this->app->singleton('League\Oauth2\Server\Domain\Repository\Scope', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Eloquent\Scope');
-			$this->app->singleton('League\Oauth2\Server\Domain\Repository\Client', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Eloquent\Client');
+			$this->app->singleton('Atrauzzi\Oauth2Server\Domain\Repository\Scope', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Eloquent\Scope');
+			$this->app->singleton('Atrauzzi\Oauth2Server\Domain\Repository\Client', 'Atrauzzi\LaravelOauth2Server\Domain\Repository\Eloquent\Client');
 
 		}
 
@@ -74,6 +81,13 @@
 		 */
 		protected function registerPackage() {
 
+			$packageViewPath = sprintf('%s/../resources/views', __DIR__);
+			$this->loadViewsFrom($packageViewPath, 'oauth2');
+
+			$this->publishes([
+				$packageViewPath => base_path('resources/views/vendor/oauth2')
+			], 'views');
+
 			$this->publishes([sprintf('%s/../config/oauth2.php', __DIR__) => config_path('oauth2.php')], 'config');
 			$this->publishes([sprintf('%s/../database/migrations/', __DIR__) => base_path('/database/migrations')],	'migrations');
 
@@ -86,7 +100,22 @@
 
 			$router->group(['namespace' => 'Atrauzzi\LaravelOauth2Server\Http\Controller', 'prefix' => 'oauth2'], function(Router $router) {
 
-				$router->post('authorize', '');
+				$router->get('authorize', [
+					'as' => 'oauth2.create-authorization',
+					'uses' => 'Authorization@create',
+					'middleware' => 'auth'
+				]);
+
+				$router->get('invalid-authorization', [
+					'as' => 'oauth2.invalid-authorization',
+					'uses' => 'Authorization@invalid',
+				]);
+
+				$router->post('authorize', [
+					'as' => 'oauth2.store-authorization',
+					'uses' => 'Authorization@store',
+					'middleware' => 'auth'
+				]);
 
 			});
 
@@ -95,16 +124,18 @@
 		/**
 		 * Convenience method to build core server objects.
 		 *
-		 * @param string|string[] $parts
-		 * @return mixed
+		 * @param string ...$parts
+		 * @return string
 		 */
-		protected function makeServerObject($parts) {
+		protected function makeServerObject() {
 
-			if(!is_array($parts))
-				$parts = func_get_args();
+			$parts = func_get_args();
+
+			if(is_array($parts[0]))
+				$parts = $parts[0];
 
 			$parts = array_map('studly_case', $parts);
-			array_unshift($parts, 'League', 'Oauth2', 'Server');
+			array_unshift($parts, 'Atrauzzi', 'Oauth2Server');
 
 			return $this->app->make(implode('\\', $parts));
 

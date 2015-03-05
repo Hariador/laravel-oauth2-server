@@ -1,7 +1,7 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Entity {
 
 	use Illuminate\Database\Eloquent\Model;
-	use League\Oauth2\Server\Domain\Entity\Scope as ScopeContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\Scope as ScopeContract;
 
 
 	class Scope extends Model implements ScopeContract {
@@ -19,7 +19,7 @@
 		 * @param string $name
 		 * @param string $description
 		 */
-		public function __construct($name, $description) {
+		public function __construct($name = null, $description = null) {
 			$this->name = $name;
 			$this->description = $description;
 		}

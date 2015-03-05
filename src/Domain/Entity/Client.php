@@ -1,7 +1,7 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Entity {
 
 	use Illuminate\Database\Eloquent\Model;
-	use League\Oauth2\Server\Domain\Entity\Client as ClientContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\Client as ClientContract;
 
 
 	class Client extends Model implements ClientContract {

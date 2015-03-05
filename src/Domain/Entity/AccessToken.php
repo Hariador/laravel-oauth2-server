@@ -1,7 +1,7 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Domain\Entity {
 
-	use League\Oauth2\Server\Domain\Entity\AccessToken as AccessTokenContract;
-	use League\Oauth2\Server\Domain\Entity\Impl\AccessToken as AccessTokenImpl;
+	use Atrauzzi\Oauth2Server\Domain\Entity\AccessToken as AccessTokenContract;
+	use Atrauzzi\Oauth2Server\Domain\Entity\Impl\AccessToken as AccessTokenImpl;
 
 
 	class AccessToken implements AccessTokenContract {
