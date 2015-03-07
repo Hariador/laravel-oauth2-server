@@ -17,11 +17,11 @@
 		 * @param int|string $oauthableId
 		 * @param string|int $oauthableType
 		 * @param int $clientId
-		 * @param string[] $scopeNames
+		 * @param null|string[] $scopeNames
 		 * @param string $redirectUri
 		 * @return \Atrauzzi\Oauth2Server\Domain\Entity\AuthorizationCode
 		 */
-		public function create($id, $expireTime, $oauthableId, $oauthableType, $clientId, array $scopeNames, $redirectUri) {
+		public function create($id, $expireTime, $oauthableId, $oauthableType, $clientId, array $scopeNames = null, $redirectUri) {
 			return new AuthorizationCodeEntity($id, $expireTime, $oauthableId, $oauthableType, $clientId, $scopeNames, $redirectUri);
 		}
 
@@ -40,7 +40,7 @@
 			$this->cache->put(
 				$this->getKey('authorization_code', $authorizationCode->getId()),
 				$authorizationCode,
-				new DateTime($authorizationCode->getExpireTime())
+				new DateTime('@'.$authorizationCode->getExpireTime())
 			);
 		}
 

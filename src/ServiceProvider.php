@@ -91,6 +91,10 @@
 			$this->publishes([sprintf('%s/../config/oauth2.php', __DIR__) => config_path('oauth2.php')], 'config');
 			$this->publishes([sprintf('%s/../database/migrations/', __DIR__) => base_path('/database/migrations')],	'migrations');
 
+			$this->commands(
+				'Atrauzzi\LaravelOauth2Server\Console\CreateClient'
+			);
+
 		}
 
 		/**

@@ -1,6 +1,5 @@
 <?php namespace Atrauzzi\LaravelOauth2Server\Http\Controller {
 
-	use Illuminate\Http\Request;
 	use Illuminate\Routing\Controller;
 	//
 	use Atrauzzi\Oauth2Server\AuthorizationService;
@@ -13,22 +12,17 @@
 
 	class Authorization extends Controller {
 
-		/** @var \Atrauzzi\Oauth2Server\AuthorizationService */
-		protected $authorizationService;
-
-		/**
-		 * @param \Atrauzzi\Oauth2Server\AuthorizationService $authorizationService
-		 */
-		public function __construct(AuthorizationService $authorizationService) {
-			$this->authorizationService = $authorizationService;
-		}
-
 		/**
 		 * @param \Atrauzzi\LaravelOauth2Server\Http\Request\CreateAuthorization $request
+		 * @return \Illuminate\View\View
 		 */
 		public function create(CreateAuthorization $request) {
 
-			// Get scopes or default scopes.
+			return view('oauth2::authorization_create', [
+				'client' => $request->getClient(),
+				'requestedScopes' => $request->getRequestedScopes(),
+				'storeUrl' => route('oauth2.store-authorization', $request->query())
+			]);
 
 		}
 
@@ -39,18 +33,27 @@
 			return view('oauth2::authorization_invalid');
 		}
 
-		public function store(StoreAuthorization $request) {
+		/**
+		 * @param \Atrauzzi\LaravelOauth2Server\Http\Request\StoreAuthorization $request
+		 * @param \Atrauzzi\Oauth2Server\AuthorizationService $authorizationService
+		 * @return \Illuminate\Http\JsonResponse|string
+		 */
+		public function store(StoreAuthorization $request, AuthorizationService $authorizationService) {
 
-//			$authorizationData = $this->authorizationService->doFlow(
-//				$request,
-//				AuthorizationCodeGrant::FLOW_AUTHORIZE
-//			);
-//
-//			return new JsonResponse($authorizationData);
+			if($request->get('authorized'))
+				$flow = AuthorizationCodeGrant::FLOW_AUTHORIZE;
+			else
+				$flow = AuthorizationCodeGrant::FLOW_REJECTED;
+
+			$authorizationData = $authorizationService->doFlow($request, $flow, $request->user());
+
+			return redirect($authorizationData['redirect_uri']);
 
 		}
 
-		public function exchange() {
+		public function exchangeCode(AuthorizationService $authorizationService) {
+
+			// Return code.
 
 		}
 

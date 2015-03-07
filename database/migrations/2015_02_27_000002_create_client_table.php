@@ -15,13 +15,13 @@ class CreateClientTable extends Migration {
 
 		Schema::create('oauth2_client', function(Blueprint $table) {
 
-			$table->increments('id');
+			$table->string('id')->unique()->primary();
 
 			$table->string('name')->unique();
 
 			$table->string('secret')->unique();
 
-			$table->string('redirect_uri')->nullable();
+			$table->string('redirect_uri');
 
 			$table->timestamps();
 

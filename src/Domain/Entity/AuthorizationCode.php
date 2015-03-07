@@ -36,10 +36,10 @@
 		 * @param int|string $oauthableId
 		 * @param string|int $oauthableType
 		 * @param int $clientId
-		 * @param string[] $scopeNames
+		 * @param array|string[] $scopeNames
 		 * @param string $redirectUri
 		 */
-		public function __construct($id, $expireTime, $oauthableId, $oauthableType, $clientId, array $scopeNames, $redirectUri) {
+		public function __construct($id, $expireTime, $oauthableId, $oauthableType, $clientId, array $scopeNames = null, $redirectUri) {
 			$this->id = $id;
 			$this->expireTime = $expireTime;
 			$this->oauthableId = $oauthableId;

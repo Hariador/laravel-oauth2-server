@@ -9,16 +9,16 @@
 		/** @var string */
 		protected $table = 'oauth2_client';
 
-		/**
-		 * @param string $name
-		 * @param string $secret
-		 * @param string $redirectUri
-		 */
-		public function __construct($name, $secret, $redirectUri) {
-			$this->name = $name;
-			$this->secret = $secret;
-			$this->redirect_uri = $redirectUri;
-		}
+		/** @var bool */
+		public $incrementing = false;
+
+		protected $fillable = [
+			'id',
+			'secret',
+			'name',
+			'description',
+			'redirect_uri'
+		];
 
 		/**
 		 * @return int
