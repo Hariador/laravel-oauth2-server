@@ -39,10 +39,12 @@
 		 * @param \Atrauzzi\Oauth2Server\Domain\Entity\AccessToken $accessToken
 		 */
 		public function persist(AccessTokenContract $accessToken) {
+
+			$epoch_time = $accessToken->getExpireTime();
 			$this->cache->put(
 				$this->getKey('access_token', $accessToken->getId()),
 				$accessToken,
-				new DateTime($accessToken->getExpireTime())
+				new DateTime("@$epoch_time")
 			);
 		}
 
