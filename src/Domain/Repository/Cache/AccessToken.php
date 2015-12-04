@@ -21,10 +21,7 @@
 		 * @return \Atrauzzi\LaravelOauth2Server\Domain\Entity\AccessToken
 		 */
 		public function create($id, $expireTime, $oauthableId, $oauthableType, $clientId, array $scopeNames) {
-			error_log("Passing along constructor call",0);
-			$temp= new AccessTokenEntity($id, $expireTime, $oauthableId, $oauthableType, $clientId, $scopeNames);
-
-			return $temp ;
+			return new AccessTokenEntity($id, $expireTime, $oauthableId, $oauthableType, $clientId, $scopeNames);
 		}
 
 		/**
