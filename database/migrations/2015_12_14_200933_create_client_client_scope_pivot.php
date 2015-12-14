@@ -14,6 +14,10 @@ class CreateClientClientScopePivot extends Migration {
 			$table->increments('id');
 			$table->integer('scope_id');
 			$table->string('client_id');
+			$table->unique([
+				'client_id',
+				'scope_id'
+			]);
 		});
 	}
 
