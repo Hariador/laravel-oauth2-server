@@ -3,15 +3,13 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientscope extends Migration
-{
+class CreateClientscope extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
+	public function up() {
 		Schema::create('oauth2_client_scope', function(blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
@@ -24,8 +22,7 @@ class CreateClientscope extends Migration
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('oauth2_client_scope');
 	}
 }
