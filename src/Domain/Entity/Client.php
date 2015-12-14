@@ -59,6 +59,13 @@
 			return $this->redirect_uri;
 		}
 
+		public function scopes() {
+			return $this->belongsToMany(
+				'Atrauzzi\LaravelOauth2Server\Domain\Entity\ClientScope',
+				'client_scope_pivot',
+				'client_id',
+				'scope_id');
+		}
 	}
 
 }
