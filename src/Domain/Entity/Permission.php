@@ -27,7 +27,7 @@
 			return $this>$this->belongsToMany(
 				'Atrauzzi\LaravelOauth2Server\Domain\Entity\Client',
 				'oauth2_client_permission',
-				'scope_id',
+				'permission_id',
 				'client_id');
 		}
 

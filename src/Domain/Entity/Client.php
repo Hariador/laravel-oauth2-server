@@ -64,7 +64,7 @@
 				'Atrauzzi\LaravelOauth2Server\Domain\Entity\Permission',
 				'oauth2_client_permission',
 				'client_id',
-				'scope_id');
+				'permission_id');
 		}
 	}
 

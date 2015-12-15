@@ -12,11 +12,11 @@ class CreateClientClientPermission extends Migration {
 	public function up() {
 		Schema::create('oauth2_client_permission', function (Blueprint $table) {
 			$table->increments('id');
-			$table->integer('scope_id');
+			$table->integer('permission_id');
 			$table->string('client_id');
 			$table->unique([
 				'client_id',
-				'scope_id'
+				'permission_id'
 			]);
 		});
 	}
