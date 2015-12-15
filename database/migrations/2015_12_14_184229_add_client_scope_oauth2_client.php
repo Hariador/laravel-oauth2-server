@@ -11,7 +11,7 @@ class AddClientScopeOauth2Client extends Migration {
 	 */
 	public function up() {
 		Schema::table('oauth2_client', function (Blueprint $table) {
-		   $table->integer('client_scope')->nullable();
+		   $table->integer('client_permission')->nullable();
 		});
 	}
 
