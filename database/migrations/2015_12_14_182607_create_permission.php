@@ -3,15 +3,17 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddClientScopeOauth2Client extends Migration {
+class CreatePermission extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::table('oauth2_client', function (Blueprint $table) {
-		   $table->integer('client_permission')->nullable();
+		Schema::create('oauth2_permission', function(blueprint $table) {
+			$table->increments('id');
+			$table->string('name');
+			$table->string('description');
 		});
 	}
 
@@ -21,6 +23,6 @@ class AddClientScopeOauth2Client extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		//
+		Schema::drop('oauth2_permission');
 	}
 }

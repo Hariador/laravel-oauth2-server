@@ -59,10 +59,10 @@
 			return $this->redirect_uri;
 		}
 
-		public function scopes() {
+		public function permissions() {
 			return $this->belongsToMany(
-				'Atrauzzi\LaravelOauth2Server\Domain\Entity\ClientScope',
-				'client_scope_pivot',
+				'Atrauzzi\LaravelOauth2Server\Domain\Entity\Permission',
+				'oauth2_client_permission',
 				'client_id',
 				'scope_id');
 		}

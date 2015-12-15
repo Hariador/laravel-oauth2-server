@@ -5,7 +5,7 @@
 	class ClientPermission extends Model {
 
 
-		protected $table = 'oauth2_client_scope';
+		protected $table = 'oauth2_permission';
 
 		protected $fillable = [
 			'name',
@@ -26,7 +26,7 @@
 		public function clients() {
 			return $this>$this->belongsToMany(
 				'Atrauzzi\LaravelOauth2Server\Domain\Entity\Client',
-				'client_scope_pivot',
+				'oauth2_client_permission',
 				'scope_id',
 				'client_id');
 		}
