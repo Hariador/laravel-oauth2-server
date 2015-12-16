@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientClientPermission extends Migration {
+class CreateClientPermission extends Migration {
 	/**
 	 * Run the migrations.
 	 *
@@ -27,6 +27,6 @@ class CreateClientClientPermission extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('client_permission');
+		Schema::drop('oauth2_client_permission');
 	}
 }
