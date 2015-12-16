@@ -70,7 +70,6 @@
 		public function hasPermission($permission_name) {
 
 			foreach($this->permissions as $permission) {
-				error_log($permission->getName(),0);
 				if($permission->getName() == $permission_name)
 					return true;
 			}
