@@ -66,6 +66,15 @@
 				'client_id',
 				'permission_id');
 		}
+
+		public function hasPermission($permission_name) {
+
+			foreach($this->permissions as $permission) {
+				if($permission->getName() == $permission_name)
+					return true;
+			}
+			return false;
+		}
 	}
 
 }

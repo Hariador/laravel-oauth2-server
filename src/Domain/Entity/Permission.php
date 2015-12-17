@@ -2,7 +2,7 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class ClientPermission extends Model {
+	class Permission extends Model {
 
 
 		protected $table = 'oauth2_permission';
