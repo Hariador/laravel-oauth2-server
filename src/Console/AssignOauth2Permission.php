@@ -12,7 +12,7 @@
 		 *
 		 * @var string
 		 */
-		protected $signature = 'oauth2:assign-client-permission {api_key} {permission_name}';
+		protected $signature = 'oauth2:assign-client-permission {secret} {permission_name}';
 
 		/**
 		 * @var OauthService
@@ -25,7 +25,7 @@
 		 * @var string
 		 */
 		protected $description = 'Assigns a permission to a client found with API key
-                              {api_key: API of the client to assign the permisisont to},
+                              {secret: API of the client to assign the permisisont to},
                               {permission_name: Name of the permission}';
 
 		/**
@@ -46,13 +46,13 @@
 		 */
 		public function handle() {
 
-			$apiKey = $this->argument('api_key');
+			$secret = $this->argument('secret');
 			$permissionName = $this->argument('permission_name');
 
 			$permission_query = Permission::where('name',$permissionName);
 			$permission = $permission_query->first();
 			/// @var Atrauzzi\LaravelOauth2Server\Domain\Entity\Client
-			$client = $this->client->find(null, $apiKey);
+			$client = $this->client->find(null, $secret);
 			$client->permissions()->attach($permission);
 		}
 	}
